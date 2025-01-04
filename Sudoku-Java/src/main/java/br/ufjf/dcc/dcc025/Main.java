@@ -14,48 +14,52 @@ public class Main
             {
                 System.out.println("Escolha o modo de jogo:\n1 - Modo Aleatório\n2 - Modo Manual");
                 String entrada = scanner.next();
+                Tabuleiro tabuleiro = new Tabuleiro();
                 switch (entrada)
                 {
                     case "1":
                         boolean key1 = true;
-                        while (key1)
-                        {
+                        while (key1) {
                             System.out.println("Quantas entradas você deseja preencher?");
                             String entrada_1 = scanner.next();
-                            try
-                            {
+                            try {
                                 int iEntrada_1 = Integer.parseInt(entrada_1);
 
+                                // Verifica se o número de entradas é válido
                                 if (iEntrada_1 <= 0 || iEntrada_1 > 81) {
                                     throw new NumberFormatException("");
                                 }
 
-
                                 Random random = new Random();
                                 int casasPreenchidas = 0;
 
-                                while(casasPreenchidas < entrada_1){
-                                    int linha = random.nextInt(9);
-                                    int coluna = random.nextInt(9);
-                                    int valor = random.nextInt(9) + 1;
+                                // Preencher o tabuleiro automaticamente com o número de entradas desejado
+                                while (casasPreenchidas < iEntrada_1) {
+                                    int linha = random.nextInt(9); // Gera uma linha aleatória
+                                    int coluna = random.nextInt(9); // Gera uma coluna aleatória
+                                    int valor = random.nextInt(9) + 1; // Gera um valor aleatório de 1 a 9
 
-
+                                    // Tenta inserir o valor na posição se for válida
+                                    if (tabuleiro.getValor(linha, coluna) == 0 && tabuleiro.getElemento(linha, coluna).getPossibleValues().contains(valor)) {
+                                        tabuleiro.setValor(linha, coluna, valor);
+                                        tabuleiro.setValorImutavel(linha, coluna, valor);
+                                        casasPreenchidas++;
+                                    }
                                 }
-                                //implementação
 
-
+                                // Imprime o tabuleiro preenchido
+                                System.out.println("Tabuleiro gerado automaticamente:");
+                                tabuleiro.imprimirTabuleiro();
 
                                 key1 = false;
 
-                            }
-                            catch (NumberFormatException e)
-                            {
+                            } catch (NumberFormatException e) {
                                 System.out.println("Erro: Insira um número inteiro positivo válido.");
                             }
                         }
                         key = false;
-
                         break;
+
 
                     // manual
                     case "2":
@@ -74,7 +78,6 @@ public class Main
                                     throw new NumberFormatException("");
                                 }
 
-                                int L, C, V;
                                 while (iEntrada_2 > 0)
                                 {
                                     System.out.println("Insira seu comando no formato (L,C,V).");
@@ -83,13 +86,7 @@ public class Main
                                     String regex = "^\\([0-8]+,[0-8]+,[1-9]+\\)$";
 
                                     if (entrada_3.matches(regex)) {
-                                        String[] valores = entrada_3.substring(1, entrada_3.length() - 1).split(",");
-
-                                        L = Integer.parseInt(valores[0]);
-                                        C = Integer.parseInt(valores[1]);
-                                        V = Integer.parseInt(valores[2]);
-
-
+                                        
                                     } else {
                                         System.out.println("Formato inválido.");
                                     }
@@ -97,7 +94,7 @@ public class Main
 
                                 key2 = false;
 
-                                // caso seja inserida uma entrada com tipagem inválida
+                            // caso seja inserida uma entrada com tipagem inválida
                             }
                             catch (NumberFormatException e)
                             {

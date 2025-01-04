@@ -13,6 +13,10 @@ public class Tabuleiro {
         }
     }
 
+    public Elemento getElemento(int linha, int coluna) {
+        return grid[linha][coluna];
+    }
+
     // Método para definir um valor no tabuleiro
     public void setValor(int linha, int coluna, int valor) {
         Elemento elemento = grid[linha][coluna];
@@ -22,6 +26,10 @@ public class Tabuleiro {
         } else {
             System.out.println("Valor inválido para essa posição.");
         }
+    }
+
+    public void setValorImutavel(int linha, int coluna, int valor) {
+        grid[linha][coluna].deixandoImutavel(); // Torna o valor imutável
     }
 
     // Método para obter um valor do tabuleiro
