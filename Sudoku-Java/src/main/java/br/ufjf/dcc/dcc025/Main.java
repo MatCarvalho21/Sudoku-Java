@@ -2,7 +2,9 @@ package br.ufjf.dcc.dcc025;
 
 public class Main {
     public static void main(String[] args) {
-        Elemento elemento1 = new Elemento(1, 1, 5);
-        System.out.println(elemento1.toString());
+        while (true){
+            System.out.println("Bem-vindo ao Sudoko!");
+            System.out.println("Escolha o modo de jogo:\n1 - Modo Aleatório\n2-Modo Manual");
+        }
     }
 }
