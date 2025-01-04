@@ -39,6 +39,17 @@ public class Tabuleiro {
         }
     }
 
+    public boolean checkagemVitoria(){
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (grid[i][j].getValor() == 0){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     // Método que atualiza as listas de valores possíveis na linha, coluna e quadrante 3x3
     private void atualizarPossiveis(int linha, int coluna, int valor) {
         // Remover valor das possíveis posições na linha
