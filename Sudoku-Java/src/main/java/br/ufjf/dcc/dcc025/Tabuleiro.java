@@ -30,6 +30,15 @@ public class Tabuleiro {
         }
     }
 
+    public void setValorRemove(int linha, int coluna, int valor){
+        Elemento elemento = grid[linha][coluna];
+        if(elemento.getValor() != 0){
+            elemento.setValor(0);
+        }
+        else
+            System.out.println("tem nada aqui nao uai");
+    }
+
     public void setValorImutavel(int linha, int coluna, int valor) {
         grid[linha][coluna].deixandoImutavel(); // Torna o valor imutável
     }

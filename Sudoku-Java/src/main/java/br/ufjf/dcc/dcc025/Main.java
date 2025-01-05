@@ -7,7 +7,8 @@ public class Main
     public static void main(String[] args)
     {
         Scanner scanner = new Scanner(System.in);
-        while (true){
+        boolean geral = true;
+        while (geral){
             Tabuleiro tabuleiro = new Tabuleiro();
             System.out.println("Bem-vindo ao Sudoku!");
             boolean key = true;
@@ -170,7 +171,7 @@ public class Main
 
                                         // Verifica se os valores estão dentro dos limites válidos
                                         if (linha >= 0 && linha < 9 && coluna >= 0 && coluna < 9 ) {
-                                            tabuleiro.setValor(linha, coluna, 1);                                       // *ERRO*  para 0, mas nao deixa, por que tem que estar na lista de valores possiveis
+                                            tabuleiro.setValorRemove(linha, coluna, 0);                                       // *ERRO*  para 0, mas nao deixa, por que tem que estar na lista de valores possiveis
 
                                             System.out.println(tabuleiro.getElemento(linha,coluna).toString());         //teste para ver se e mutavel ou nao
 
@@ -185,13 +186,45 @@ public class Main
                                 break;
 
                             case "3":
+                                String jogadaDica = scanner.next();
+                                if (jogadaDica.matches("^(\\(\\d,\\d\\))+")) {
+                                    // Separa as múltiplas entradas
+                                    String[] entradas = jogadaDica.split("\\)\\(");
+
+                                    for (String item : entradas) {
+                                        item = item.replace("(", "").replace(")", ""); // Remove os parênteses
+                                        String[] valores = item.split(",");
+
+                                        int linha = Integer.parseInt(valores[0]); // Ajusta para 0-indexado
+                                        int coluna = Integer.parseInt(valores[1]); // Ajusta para 0-indexado
+
+
+                                        // Verifica se os valores estão dentro dos limites válidos
+                                        if (linha >= 0 && linha < 9 && coluna >= 0 && coluna < 9 ) {
+                                            Elemento elemento = tabuleiro.getElemento(linha, coluna);
+
+                                            System.out.println("Valores possíveis: " + elemento.getPossibleValues());
+
+                                        } else {
+                                            System.out.println("Valores fora dos limites permitidos. Insira valores de 1 a 9 para linha, coluna.");
+                                        }
+                                    }
+                                } else {
+                                    System.out.println("Formato inválido. Tente novamente.");
+                                }
+                                tabuleiro.imprimirTabuleiro();
+                                break;
+
+                            case "4":
+                                key_jogadas = false;
+                                break;
 
                         }
                 }
 
 
 
-            break;
+
         }
     }
 }
