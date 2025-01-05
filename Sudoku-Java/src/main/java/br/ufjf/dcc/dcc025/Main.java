@@ -63,46 +63,55 @@ public class Main
 
                     // manual
                     case "2":
-                        boolean key2 = true;
-                        while (key2)
-                        {
-                            System.out.println("Quantas entradas você deseja preencher?");
-                            String entrada_2 = scanner.next();
-                            try
-                            {
-                                int iEntrada_2 = Integer.parseInt(entrada_2);
+                        // Consome a quebra de linha remanescente
+                        scanner.nextLine();
 
-                                // caso seja inserido um inteiro inválido
-                                if (iEntrada_2 <= 0 || iEntrada_2 > 81)
-                                {
-                                    throw new NumberFormatException("");
-                                }
+                        boolean inserirValores = true;
 
-                                while (iEntrada_2 > 0)
-                                {
-                                    System.out.println("Insira seu comando no formato (L,C,V).");
-                                    String entrada_3 = scanner.next();
+                        while (inserirValores) {
+                            System.out.println("Insira os valores no formato ([linha],[coluna],[valor]) ou (-1,-1,-1) para terminar:");
+                            String entradaManual = scanner.nextLine();
 
-                                    String regex = "^\\([0-8]+,[0-8]+,[1-9]+\\)$";
+                            // Verifica se a entrada é para encerrar
+                            if (entradaManual.equals("(-1,-1,-1)")) {
+                                inserirValores = false;
+                                System.out.println("Encerrando inserção de valores.");
+                            } else {
+                                // Verifica se a entrada tem o formato correto
+                                if (entradaManual.matches("^(\\(\\d,\\d,\\d\\))+")) {
+                                    // Separa as múltiplas entradas
+                                    String[] entradas = entradaManual.split("\\)\\(");
 
-                                    if (entrada_3.matches(regex)) {
-                                        
-                                    } else {
-                                        System.out.println("Formato inválido.");
+                                    for (String item : entradas) {
+                                        item = item.replace("(", "").replace(")", ""); // Remove os parênteses
+                                        String[] valores = item.split(",");
+
+                                        int linha = Integer.parseInt(valores[0]); // Ajusta para 0-indexado
+                                        int coluna = Integer.parseInt(valores[1]); // Ajusta para 0-indexado
+                                        int valor = Integer.parseInt(valores[2]);
+
+                                        // Verifica se os valores estão dentro dos limites válidos
+                                        if (linha >= 0 && linha < 9 && coluna >= 0 && coluna < 9 && valor > 0 && valor <= 9) {
+                                           boolean veracidade = tabuleiro.setValor(linha, coluna, valor);
+                                           if(veracidade)
+                                               tabuleiro.setValorImutavel(linha, coluna, valor);
+
+                                            System.out.println(tabuleiro.getElemento(linha,coluna).toString());
+
+                                        } else {
+                                            System.out.println("Valores fora dos limites permitidos. Insira valores de 1 a 9 para linha, coluna e valor.");
+                                        }
                                     }
+                                } else {
+                                    System.out.println("Formato inválido. Tente novamente.");
                                 }
-
-                                key2 = false;
-
-                            // caso seja inserida uma entrada com tipagem inválida
-                            }
-                            catch (NumberFormatException e)
-                            {
-                                System.out.println("Erro: Insira um número inteiro positivo válido.");
                             }
                         }
+                        System.out.println("Tabuleiro manual :");
+                        tabuleiro.imprimirTabuleiro();
                         key = false;
                         break;
+
 
                     default:
                         System.out.println("Entrada inválida, tente novamente!");

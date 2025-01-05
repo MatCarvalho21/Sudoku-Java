@@ -18,13 +18,15 @@ public class Tabuleiro {
     }
 
     // Método para definir um valor no tabuleiro
-    public void setValor(int linha, int coluna, int valor) {
+    public boolean setValor(int linha, int coluna, int valor) {
         Elemento elemento = grid[linha][coluna];
         if (elemento.getPossibleValues().contains(valor)) {
             elemento.setValor(valor);
             atualizarPossiveis(linha, coluna, valor); // Remove o valor das possíveis posições da linha, coluna e quadrante
+            return true;
         } else {
             System.out.println("Valor inválido para essa posição.");
+            return false;
         }
     }
 
