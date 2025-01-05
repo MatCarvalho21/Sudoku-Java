@@ -8,13 +8,14 @@ public class Main
     {
         Scanner scanner = new Scanner(System.in);
         while (true){
-            System.out.println("Bem-vindo ao Sudoko!");
+            Tabuleiro tabuleiro = new Tabuleiro();
+            System.out.println("Bem-vindo ao Sudoku!");
             boolean key = true;
             while(key)
             {
                 System.out.println("Escolha o modo de jogo:\n1 - Modo Aleatório\n2 - Modo Manual");
                 String entrada = scanner.next();
-                Tabuleiro tabuleiro = new Tabuleiro();
+                //Tabuleiro tabuleiro = new Tabuleiro();
                 switch (entrada)
                 {
                     case "1":
@@ -96,7 +97,7 @@ public class Main
                                            if(veracidade)
                                                tabuleiro.setValorImutavel(linha, coluna, valor);
 
-                                            System.out.println(tabuleiro.getElemento(linha,coluna).toString());
+                                            System.out.println(tabuleiro.getElemento(linha,coluna).toString());         //teste para ver se e mutavel ou nao
 
                                         } else {
                                             System.out.println("Valores fora dos limites permitidos. Insira valores de 1 a 9 para linha, coluna e valor.");
@@ -118,6 +119,78 @@ public class Main
                         break;
                 }
             }
+             boolean key_jogadas = true;
+                while (key_jogadas){
+                    System.out.println("Escolha a jogada:\n1 - Adicionar elemento - (L,C,V)\n2 - Remover elemento - (L,C)\n3 - Dica - (L,C)\n4 - Sair do jogo");
+                    String jogadas = scanner.next();
+                        switch (jogadas){
+                            case "1":
+                                String jogadaAdd = scanner.next();
+                                // Verifica se a entrada tem o formato correto
+                                if (jogadaAdd.matches("^(\\(\\d,\\d,\\d\\))+")) {
+                                    // Separa as múltiplas entradas
+                                    String[] entradas = jogadaAdd.split("\\)\\(");
+
+                                    for (String item : entradas) {
+                                        item = item.replace("(", "").replace(")", ""); // Remove os parênteses
+                                        String[] valores = item.split(",");
+
+                                        int linha = Integer.parseInt(valores[0]); // Ajusta para 0-indexado
+                                        int coluna = Integer.parseInt(valores[1]); // Ajusta para 0-indexado
+                                        int valor = Integer.parseInt(valores[2]);
+
+                                        // Verifica se os valores estão dentro dos limites válidos
+                                        if (linha >= 0 && linha < 9 && coluna >= 0 && coluna < 9 && valor > 0 && valor <= 9) {
+                                            tabuleiro.setValor(linha, coluna, valor);
+                                            System.out.println(tabuleiro.getElemento(linha,coluna).toString());         //teste para ver se e mutavel ou nao
+
+                                        } else {
+                                            System.out.println("Valores fora dos limites permitidos. Insira valores de 1 a 9 para linha, coluna e valor.");
+                                        }
+                                    }
+                                } else {
+                                    System.out.println("Formato inválido. Tente novamente.");
+                                }
+                                tabuleiro.imprimirTabuleiro();
+                                break;
+
+                            case "2":
+                                String jogadaRemove = scanner.next();
+                                // Verifica se a entrada tem o formato correto
+                                if (jogadaRemove.matches("^(\\(\\d,\\d\\))+")) {
+                                    // Separa as múltiplas entradas
+                                    String[] entradas = jogadaRemove.split("\\)\\(");
+
+                                    for (String item : entradas) {
+                                        item = item.replace("(", "").replace(")", ""); // Remove os parênteses
+                                        String[] valores = item.split(",");
+
+                                        int linha = Integer.parseInt(valores[0]); // Ajusta para 0-indexado
+                                        int coluna = Integer.parseInt(valores[1]); // Ajusta para 0-indexado
+
+                                        // Verifica se os valores estão dentro dos limites válidos
+                                        if (linha >= 0 && linha < 9 && coluna >= 0 && coluna < 9 ) {
+                                            tabuleiro.setValor(linha, coluna, 1);                                       // *ERRO*  para 0, mas nao deixa, por que tem que estar na lista de valores possiveis
+
+                                            System.out.println(tabuleiro.getElemento(linha,coluna).toString());         //teste para ver se e mutavel ou nao
+
+                                        } else {
+                                            System.out.println("Valores fora dos limites permitidos. Insira valores de 1 a 9 para linha, coluna.");
+                                        }
+                                    }
+                                } else {
+                                    System.out.println("Formato inválido. Tente novamente.");
+                                }
+                                tabuleiro.imprimirTabuleiro();
+                                break;
+
+                            case "3":
+
+                        }
+                }
+
+
+
             break;
         }
     }
