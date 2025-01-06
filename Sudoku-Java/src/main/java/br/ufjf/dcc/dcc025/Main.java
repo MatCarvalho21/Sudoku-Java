@@ -34,34 +34,23 @@ public class Main
 
                                 while (chave) {
                                     tabuleiro = new Tabuleiro(); // Reinicie o tabuleiro
-                                    casasPreenchidas = 0;
 
-                                    while (casasPreenchidas < 1) {
-                                        int linha = random.nextInt(9);
-                                        int coluna = random.nextInt(9);
-                                        int valor = random.nextInt(9) + 1;
-
-                                        // Verifica se a célula está vazia e se o valor é permitido
-                                        if (tabuleiro.getValor(linha, coluna) == 0 && tabuleiro.podeColocarValor(linha, coluna, valor)) {
-                                            tabuleiro.setValor(linha, coluna, valor);
-                                            tabuleiro.setValorImutavel(linha, coluna, valor); // Define como valor imutável
-                                            casasPreenchidas++;
-                                        }
-                                    }
+                                    int linha, coluna;
 
                                     // Verifica a validade e resolvibilidade do tabuleiro parcial
                                     chave = !tabuleiro.verificaValidade() || !tabuleiro.ehResolvido();
+
                                     if (!chave) {
                                         int i = 0;
                                         while (i < 81 - iEntrada_1)
                                         {
-                                            int linha = random.nextInt(9);
-                                            int coluna = random.nextInt(9);
+                                            linha = random.nextInt(9);
+                                            coluna = random.nextInt(9);
 
                                             if (tabuleiro.getValor(linha, coluna) != 0) {
                                                 tabuleiro.atualizarPossiveisRemocao(linha, coluna, tabuleiro.getValor(linha, coluna));
                                                 tabuleiro.getElemento(linha, coluna).changeMutavel();
-                                                tabuleiro.getElemento(linha, coluna).zeraElemento();
+                                                tabuleiro.setValorRemove(linha, coluna, tabuleiro.getValor(linha, coluna));
                                                 i++;
                                             }
                                         }
