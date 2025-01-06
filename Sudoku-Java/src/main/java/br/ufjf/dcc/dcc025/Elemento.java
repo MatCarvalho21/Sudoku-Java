@@ -20,6 +20,16 @@ public class Elemento {
         }
     }
 
+    public void changeMutavel()
+    {
+        this.mutavel = true;
+    }
+
+    public void zeraElemento()
+    {
+        this.valor = 0;
+    }
+
     public void deixandoImutavel() {
         this.mutavel = false;
     }

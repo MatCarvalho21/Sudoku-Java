@@ -43,7 +43,7 @@ public class Tabuleiro {
             System.out.println("Não há valores nessa posição");
     }
 
-    private void atualizarPossiveisRemocao(int linha, int coluna, int valorRemovido) {
+    public void atualizarPossiveisRemocao(int linha, int coluna, int valorRemovido) {
         for (int i = 0; i < 9; i++) {
             if (i != coluna && grid[linha][i].getValor() == 0) {
                 if (!grid[linha][i].getPossibleValues().contains(valorRemovido)) {
@@ -113,6 +113,76 @@ public class Tabuleiro {
         return true;
     }
 
+    public boolean ehResolvido() {
+        for (int linha = 0; linha < 9; linha++) {
+            for (int coluna = 0; coluna < 9; coluna++) {
+                if (grid[linha][coluna].getValor() == 0) {
+                    for (int valor : grid[linha][coluna].getPossibleValues()) {
+                        if (podeColocarValor(linha, coluna, valor)) {
+                            grid[linha][coluna].setValor(valor);
+                            if (ehResolvido()) {
+                                return true;
+                            }
+                            grid[linha][coluna].setValor(0); // Backtrack
+                        }
+                    }
+                    return false; // Se nenhum valor for possível, não é resolvível
+                }
+            }
+        }
+        return true; // Se não há células vazias, o tabuleiro é resolvido
+    }
+
+    private boolean verificaLinha(int linha, int valor) {
+        for (int coluna = 0; coluna < 9; coluna++) {
+            if (grid[linha][coluna].getValor() == valor) {
+                return false; // O valor já existe na linha
+            }
+        }
+        return true;
+    }
+
+    private boolean verificaColuna(int coluna, int valor) {
+        for (int linha = 0; linha < 9; linha++) {
+            if (grid[linha][coluna].getValor() == valor) {
+                return false; // O valor já existe na coluna
+            }
+        }
+        return true;
+    }
+
+    private boolean verificaBloco(int linha, int coluna, int valor) {
+        int linhaInicial = (linha / 3) * 3;
+        int colunaInicial = (coluna / 3) * 3;
+
+        for (int i = linhaInicial; i < linhaInicial + 3; i++) {
+            for (int j = colunaInicial; j < colunaInicial + 3; j++) {
+                if (grid[i][j].getValor() == valor) {
+                    return false; // O valor já existe no bloco 3x3
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean podeColocarValor(int linha, int coluna, int valor) {
+        // Verifica as regras do Sudoku
+        return this.verificaLinha(linha, valor) && this.verificaColuna(coluna, valor) && this.verificaBloco(linha, coluna, valor);
+    }
+
+
+    public boolean verificaValidade()
+    {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (grid[i][j].getPossibleValues() == null)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     private void atualizarPossiveis(int linha, int coluna, int valor) {
         for (int i = 0; i < 9; i++) {

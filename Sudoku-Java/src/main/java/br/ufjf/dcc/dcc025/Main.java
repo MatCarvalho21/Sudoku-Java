@@ -30,19 +30,50 @@ public class Main
                                 }
                                 Random random = new Random();
                                 int casasPreenchidas = 0;
-                                while (casasPreenchidas < iEntrada_1) {
-                                    int linha = random.nextInt(9);
-                                    int coluna = random.nextInt(9);
-                                    int valor = random.nextInt(9) + 1;
-                                    if (tabuleiro.getValor(linha, coluna) == 0 && tabuleiro.getElemento(linha, coluna).getPossibleValues().contains(valor)) {
-                                        tabuleiro.setValor(linha, coluna, valor);
-                                        tabuleiro.setValorImutavel(linha, coluna, valor);
-                                        casasPreenchidas++;
+                                boolean chave = true;
+
+                                while (chave) {
+                                    tabuleiro = new Tabuleiro(); // Reinicie o tabuleiro
+                                    casasPreenchidas = 0;
+
+                                    while (casasPreenchidas < 1) {
+                                        int linha = random.nextInt(9);
+                                        int coluna = random.nextInt(9);
+                                        int valor = random.nextInt(9) + 1;
+
+                                        // Verifica se a célula está vazia e se o valor é permitido
+                                        if (tabuleiro.getValor(linha, coluna) == 0 && tabuleiro.podeColocarValor(linha, coluna, valor)) {
+                                            tabuleiro.setValor(linha, coluna, valor);
+                                            tabuleiro.setValorImutavel(linha, coluna, valor); // Define como valor imutável
+                                            casasPreenchidas++;
+                                        }
+                                    }
+
+                                    // Verifica a validade e resolvibilidade do tabuleiro parcial
+                                    chave = !tabuleiro.verificaValidade() || !tabuleiro.ehResolvido();
+                                    if (!chave) {
+                                        int i = 0;
+                                        while (i < 81 - iEntrada_1)
+                                        {
+                                            int linha = random.nextInt(9);
+                                            int coluna = random.nextInt(9);
+
+                                            if (tabuleiro.getValor(linha, coluna) != 0) {
+                                                tabuleiro.atualizarPossiveisRemocao(linha, coluna, tabuleiro.getValor(linha, coluna));
+                                                tabuleiro.getElemento(linha, coluna).changeMutavel();
+                                                tabuleiro.getElemento(linha, coluna).zeraElemento();
+                                                i++;
+                                            }
+                                        }
+                                        System.out.println("Tabuleiro gerado automaticamente:");
+                                        tabuleiro.imprimirTabuleiro();
+                                        key1 = false;
+                                    } else {
+                                        System.out.println("Tabuleiro inválido gerado, tentando novamente...");
                                     }
                                 }
-                                System.out.println("Tabuleiro gerado automaticamente:");
-                                tabuleiro.imprimirTabuleiro();
-                                key1 = false;
+
+
                             }
                             catch (NumberFormatException e) {
                                 System.out.println("Erro: Insira um número inteiro positivo válido.");
@@ -92,7 +123,8 @@ public class Main
                         break;
                 }
             }
-                 boolean key_jogadas = true;
+                boolean key_jogadas = true;
+                boolean vitoria = false;
                 while (key_jogadas){
                     System.out.println("Escolha a jogada:\n1 - Adicionar elemento - (L,C,V)\n2 - Remover elemento - (L,C)\n3 - Dica - (L,C)\n4 - Sair do jogo");
                     String jogadas = scanner.next();
@@ -109,6 +141,7 @@ public class Main
                                         int valor = Integer.parseInt(valores[2]);
                                         if (linha >= 0 && linha < 9 && coluna >= 0 && coluna < 9 && valor > 0 && valor <= 9) {
                                             tabuleiro.setValor(linha, coluna, valor);
+                                            vitoria = tabuleiro.checkagemVitoria();
                                         }
                                         else {
                                             System.out.println("Valores fora dos limites permitidos. Insira valores de 1 a 9 para linha, coluna e valor.");
@@ -169,6 +202,19 @@ public class Main
                             default:
                                 System.out.println("Entrada inválida, tente novamente.");
                         }
+
+                    if (vitoria) {
+                        System.out.println("Parabéns! Você ganhou!");
+                        System.out.println("Você deseja jogar novamente [Y]? ");
+                        String jogarNovamente = scanner.next();
+                        if (!jogarNovamente.equalsIgnoreCase("Y")) {
+                            System.out.println("Jogo encerrado.");
+                            System.exit(0); // Encerra o programa
+                        }
+                        break; // Sai do loop e reinicia o jogo1
+
+                    }
+
                 }
         }
     }
