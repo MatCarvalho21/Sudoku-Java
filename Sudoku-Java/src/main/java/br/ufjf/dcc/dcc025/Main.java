@@ -172,7 +172,7 @@ public class Main
                                         // Verifica se os valores estão dentro dos limites válidos
                                         if (linha >= 0 && linha < 9 && coluna >= 0 && coluna < 9 ) {
                                             tabuleiro.setValorRemove(linha, coluna, 0);                                       // *ERRO*  para 0, mas nao deixa, por que tem que estar na lista de valores possiveis
-
+        //*ERRO*nao atualiza a lista de valores ao arredor
                                             System.out.println(tabuleiro.getElemento(linha,coluna).toString());         //teste para ver se e mutavel ou nao
 
                                         } else {
@@ -205,19 +205,23 @@ public class Main
 
                                             System.out.println("Valores possíveis: " + elemento.getPossibleValues());
 
-                                        } else {
+                                        }
+
+                                        else {
                                             System.out.println("Valores fora dos limites permitidos. Insira valores de 1 a 9 para linha, coluna.");
                                         }
                                     }
                                 } else {
                                     System.out.println("Formato inválido. Tente novamente.");
                                 }
-                                tabuleiro.imprimirTabuleiro();
                                 break;
 
                             case "4":
                                 key_jogadas = false;
                                 break;
+
+                            default:
+                                System.out.println("Entrada inválida, tente novamente.");
 
                         }
                 }
