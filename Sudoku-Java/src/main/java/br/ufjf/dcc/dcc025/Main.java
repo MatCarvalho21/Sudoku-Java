@@ -131,7 +131,8 @@ public class Main
                                             tabuleiro.defineValor(linha, coluna, valor);
                                             vitoria = tabuleiro.checaVitoria();
                                         }
-                                        else {
+                                        else
+                                        {
                                             System.out.println("Valores fora dos limites permitidos. Insira valores de 1 a 9 para linha, coluna e valor.");
                                         }
                                     }
