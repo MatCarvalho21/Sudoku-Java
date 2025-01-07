@@ -9,6 +9,7 @@ public class Elemento {
     public List<Integer> possibleValues;
     private boolean mutavel;
 
+    // OK
     public Elemento(int pos_x, int pos_y, int valor) {
         this.pos_x = pos_x;
         this.pos_y = pos_y;
@@ -20,41 +21,27 @@ public class Elemento {
         }
     }
 
+    // OK
     public void changeMutavel()
     {
         this.mutavel = true;
     }
 
-    public void zeraElemento()
+    // OK
+    public void deixandoImutavel()
     {
-        this.valor = 0;
-    }
-
-    public void deixandoImutavel() {
         this.mutavel = false;
     }
 
-    public int getPosX() {
-        return pos_x;
-    }
-
-    public void setPosX(int pos_x) {
-        this.pos_x = pos_x;
-    }
-
-    public int getPosY() {
-        return pos_y;
-    }
-
-    public void setPosY(int pos_y) {
-        this.pos_y = pos_y;
-    }
-
-    public int getValor() {
+    // OK
+    public int getValor()
+    {
         return valor;
     }
 
-    public void setValor(int valor) {
+    // OK
+    public void setValor(int valor)
+    {
         if (mutavel) {
             this.valor = valor;
         } else {
@@ -62,23 +49,31 @@ public class Elemento {
         }
     }
 
-    public List<Integer> getPossibleValues() {
+    // OK
+    public List<Integer> getPossibleValues()
+    {
         return new ArrayList<>(possibleValues);
     }
 
-    public void addPossibleValue(int valor) {
+    // OK
+    public void addPossibleValue(int valor)
+    {
         if (!possibleValues.contains(valor)) {
             this.possibleValues.add(valor);
             Collections.sort(this.possibleValues);
         }
     }
 
-    public void removePossibleValue(int valor) {
+    // OK
+    public void removePossibleValue(int valor)
+    {
         this.possibleValues.remove(Integer.valueOf(valor));
     }
 
+    // OK
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "Elemento{" +
                 "pos_x=" + pos_x +
                 ", pos_y=" + pos_y +

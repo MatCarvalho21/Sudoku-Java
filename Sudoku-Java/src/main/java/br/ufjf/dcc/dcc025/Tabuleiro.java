@@ -5,8 +5,9 @@ import java.util.ArrayList;
 public class Tabuleiro {
     private Elemento[][] grid;
 
-
-    public Tabuleiro() {
+    // OK
+    public Tabuleiro()
+    {
         grid = new Elemento[9][9];
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -15,11 +16,15 @@ public class Tabuleiro {
         }
     }
 
-    public Elemento getElemento(int linha, int coluna) {
+    // OK
+    public Elemento getElemento(int linha, int coluna)
+    {
         return grid[linha][coluna];
     }
 
-    public void atualizarPossiveis(int linha, int coluna, int valor) {
+    // OK - USADO AQUI
+    private void atualizarPossiveis(int linha, int coluna, int valor)
+    {
         // Atualiza as células na mesma linha
         for (int i = 0; i < 9; i++) {
             if (i != coluna) { // Evita atualizar a célula onde o valor foi inserido
@@ -46,9 +51,9 @@ public class Tabuleiro {
         }
     }
 
-
-
-    public boolean setValor(int linha, int coluna, int valor) {
+    // OK
+    public boolean setValor(int linha, int coluna, int valor)
+    {
         Elemento elemento = grid[linha][coluna];
         if (elemento.getPossibleValues().contains(valor)) {
             elemento.setValor(valor);
@@ -60,7 +65,8 @@ public class Tabuleiro {
         }
     }
 
-    public void zeraPossiveisValores()
+    // OK - USADO AQUI
+    private void zeraPossiveisValores()
     {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -69,7 +75,9 @@ public class Tabuleiro {
         }
     }
 
-    public void setValorRemove(int linha, int coluna, int valor){
+    // OK
+    public void setValorRemove(int linha, int coluna, int valor)
+    {
         Elemento elemento = grid[linha][coluna];
         if(elemento.getValor() != 0){
             int valorAtual = elemento.getValor();
@@ -80,7 +88,9 @@ public class Tabuleiro {
             System.out.println("Não há valores nessa posição");
     }
 
-    public void atualizarPossiveisRemocao(int linha, int coluna, int valorRemovido) {
+    // OK - USADO AQUI
+    private void atualizarPossiveisRemocao(int linha, int coluna, int valorRemovido)
+    {
         for (int i = 0; i < 9; i++) {
             if (grid[linha][i].getValor() == 0) {
                 if (!grid[linha][i].getPossibleValues().contains(valorRemovido)) {
@@ -111,16 +121,21 @@ public class Tabuleiro {
         }
     }
 
-    public void setValorImutavel(int linha, int coluna, int valor) {
+    // OK
+    public void setValorImutavel(int linha, int coluna, int valor)
+    {
         grid[linha][coluna].deixandoImutavel();
     }
 
-
-    public int getValor(int linha, int coluna) {
+    // OK
+    public int getValor(int linha, int coluna)
+    {
         return grid[linha][coluna].getValor();
     }
 
-    public void imprimirTabuleiro() {
+    // OK
+    public void imprimirTabuleiro()
+    {
         for (int i = 0; i < 9; i++) {
             if (i % 3 == 0 && i != 0) {
                 System.out.println("---------------------");
@@ -138,8 +153,9 @@ public class Tabuleiro {
         }
     }
 
-
-    public boolean checkagemVitoria(){
+    // OK
+    public boolean checkagemVitoria()
+    {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (grid[i][j].getValor() == 0){
@@ -150,7 +166,9 @@ public class Tabuleiro {
         return true;
     }
 
-    public boolean ehResolvido() {
+    // OK
+    public boolean ehResolvido()
+    {
         for (int linha = 0; linha < 9; linha++) {
             for (int coluna = 0; coluna < 9; coluna++) {
                 if (grid[linha][coluna].getValor() == 0) {
@@ -172,7 +190,9 @@ public class Tabuleiro {
         return true; // Se não há células vazias, o tabuleiro é resolvido
     }
 
-    private boolean verificaLinha(int linha, int valor) {
+    // OK
+    private boolean verificaLinha(int linha, int valor)
+    {
         for (int coluna = 0; coluna < 9; coluna++) {
             if (grid[linha][coluna].getValor() == valor) {
                 return false; // O valor já existe na linha
@@ -181,7 +201,9 @@ public class Tabuleiro {
         return true;
     }
 
-    private boolean verificaColuna(int coluna, int valor) {
+    // OK
+    private boolean verificaColuna(int coluna, int valor)
+    {
         for (int linha = 0; linha < 9; linha++) {
             if (grid[linha][coluna].getValor() == valor) {
                 return false; // O valor já existe na coluna
@@ -190,7 +212,9 @@ public class Tabuleiro {
         return true;
     }
 
-    private boolean verificaBloco(int linha, int coluna, int valor) {
+    // OK
+    private boolean verificaBloco(int linha, int coluna, int valor)
+    {
         int linhaInicial = (linha / 3) * 3;
         int colunaInicial = (coluna / 3) * 3;
 
@@ -204,12 +228,14 @@ public class Tabuleiro {
         return true;
     }
 
-    public boolean podeColocarValor(int linha, int coluna, int valor) {
+    // OK - USADO AQUI
+    private boolean podeColocarValor(int linha, int coluna, int valor)
+    {
         // Verifica as regras do Sudoku
         return this.verificaLinha(linha, valor) && this.verificaColuna(coluna, valor) && this.verificaBloco(linha, coluna, valor);
     }
 
-
+    // OK
     public boolean verificaValidade()
     {
         for (int i = 0; i < 9; i++) {

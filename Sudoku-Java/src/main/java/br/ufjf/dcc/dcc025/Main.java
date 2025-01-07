@@ -48,7 +48,6 @@ public class Main
                                             coluna = random.nextInt(9);
 
                                             if (tabuleiro.getValor(linha, coluna) != 0) {
-                                                tabuleiro.atualizarPossiveisRemocao(linha, coluna, tabuleiro.getValor(linha, coluna));
                                                 tabuleiro.getElemento(linha, coluna).changeMutavel();
                                                 tabuleiro.setValorRemove(linha, coluna, tabuleiro.getValor(linha, coluna));
                                                 i++;
