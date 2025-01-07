@@ -45,7 +45,7 @@ public class Elemento {
         if (mutavel) {
             this.valor = valor;
         } else {
-            System.out.printf("Não é possível alterar um elemento original.");
+            System.out.println("Não é possível alterar um elemento original.");
         }
     }
 
