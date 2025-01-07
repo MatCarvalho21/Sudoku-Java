@@ -17,25 +17,25 @@ public class Tabuleiro {
     }
 
     // OK
-    public Elemento getElemento(int linha, int coluna)
+    public Elemento pegaElemento(int linha, int coluna)
     {
         return grid[linha][coluna];
     }
 
     // OK - USADO AQUI
-    private void atualizarPossiveis(int linha, int coluna, int valor)
+    private void atualizaValoresPossiveis(int linha, int coluna, int valor)
     {
         // Atualiza as células na mesma linha
         for (int i = 0; i < 9; i++) {
             if (i != coluna) { // Evita atualizar a célula onde o valor foi inserido
-                grid[linha][i].removePossibleValue(valor);
+                grid[linha][i].removeValorPossivel(valor);
             }
         }
 
         // Atualiza as células na mesma coluna
         for (int i = 0; i < 9; i++) {
             if (i != linha) { // Evita atualizar a célula onde o valor foi inserido
-                grid[i][coluna].removePossibleValue(valor);
+                grid[i][coluna].removeValorPossivel(valor);
             }
         }
 
@@ -45,19 +45,19 @@ public class Tabuleiro {
         for (int i = blocoLinha; i < blocoLinha + 3; i++) {
             for (int j = blocoColuna; j < blocoColuna + 3; j++) {
                 if (i != linha || j != coluna) { // Evita atualizar a célula onde o valor foi inserido
-                    grid[i][j].removePossibleValue(valor);
+                    grid[i][j].removeValorPossivel(valor);
                 }
             }
         }
     }
 
     // OK
-    public boolean setValor(int linha, int coluna, int valor)
+    public boolean defineValor(int linha, int coluna, int valor)
     {
         Elemento elemento = grid[linha][coluna];
-        if (elemento.getPossibleValues().contains(valor)) {
-            elemento.setValor(valor);
-            atualizarPossiveis(linha, coluna, valor);
+        if (elemento.pegaValoresPossiveis().contains(valor)) {
+            elemento.defineValor(valor);
+            atualizaValoresPossiveis(linha, coluna, valor);
             return true;
         } else {
             System.out.println("Valor inválido para essa posição.");
@@ -66,43 +66,43 @@ public class Tabuleiro {
     }
 
     // OK - USADO AQUI
-    private void zeraPossiveisValores()
+    private void zeraValoresPossiveis()
     {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                grid[i][j].possibleValues = new ArrayList<>();
+                grid[i][j].valoresPossiveis = new ArrayList<>();
             }
         }
     }
 
     // OK
-    public void setValorRemove(int linha, int coluna, int valor)
+    public void defineValorRemove(int linha, int coluna, int valor)
     {
         Elemento elemento = grid[linha][coluna];
-        if(elemento.getValor() != 0){
-            int valorAtual = elemento.getValor();
-            elemento.setValor(0);
-            atualizarPossiveisRemocao(linha, coluna, valorAtual);
+        if(elemento.pegaValor() != 0){
+            int valorAtual = elemento.pegaValor();
+            elemento.defineValor(0);
+            atualizaValoresPossiveisRemocao(linha, coluna, valorAtual);
         }
         else
             System.out.println("Não há valores nessa posição");
     }
 
     // OK - USADO AQUI
-    private void atualizarPossiveisRemocao(int linha, int coluna, int valorRemovido)
+    private void atualizaValoresPossiveisRemocao(int linha, int coluna, int valorRemovido)
     {
         for (int i = 0; i < 9; i++) {
-            if (grid[linha][i].getValor() == 0) {
-                if (!grid[linha][i].getPossibleValues().contains(valorRemovido)) {
-                    grid[linha][i].addPossibleValue(valorRemovido);
+            if (grid[linha][i].pegaValor() == 0) {
+                if (!grid[linha][i].pegaValoresPossiveis().contains(valorRemovido)) {
+                    grid[linha][i].adicionaValorPossivel(valorRemovido);
                 }
             }
         }
 
         for (int i = 0; i < 9; i++) {
-            if (i != linha && grid[i][coluna].getValor() == 0) {
-                if (!grid[i][coluna].getPossibleValues().contains(valorRemovido)) {
-                    grid[i][coluna].addPossibleValue(valorRemovido);
+            if (i != linha && grid[i][coluna].pegaValor() == 0) {
+                if (!grid[i][coluna].pegaValoresPossiveis().contains(valorRemovido)) {
+                    grid[i][coluna].adicionaValorPossivel(valorRemovido);
                 }
             }
         }
@@ -112,9 +112,9 @@ public class Tabuleiro {
         int quadInicioColuna = (coluna / 3) * 3;
         for (int i = quadInicioLinha; i < quadInicioLinha + 3; i++) {
             for (int j = quadInicioColuna; j < quadInicioColuna + 3; j++) {
-                if ((i != linha || j != coluna) && grid[i][j].getValor() == 0) {
-                    if (!grid[i][j].getPossibleValues().contains(valorRemovido)) {
-                        grid[i][j].addPossibleValue(valorRemovido);
+                if ((i != linha || j != coluna) && grid[i][j].pegaValor() == 0) {
+                    if (!grid[i][j].pegaValoresPossiveis().contains(valorRemovido)) {
+                        grid[i][j].adicionaValorPossivel(valorRemovido);
                     }
                 }
             }
@@ -122,19 +122,19 @@ public class Tabuleiro {
     }
 
     // OK
-    public void setValorImutavel(int linha, int coluna, int valor)
+    public void defineValorImutavel(int linha, int coluna, int valor)
     {
-        grid[linha][coluna].deixandoImutavel();
+        grid[linha][coluna].deixaImutavel();
     }
 
     // OK
-    public int getValor(int linha, int coluna)
+    public int pegaValor(int linha, int coluna)
     {
-        return grid[linha][coluna].getValor();
+        return grid[linha][coluna].pegaValor();
     }
 
     // OK
-    public void imprimirTabuleiro()
+    public void imprimeTabuleiro()
     {
         for (int i = 0; i < 9; i++) {
             if (i % 3 == 0 && i != 0) {
@@ -147,18 +147,18 @@ public class Tabuleiro {
                     System.out.print("| ");
                 }
 
-                System.out.print(grid[i][j].getValor() + " ");
+                System.out.print(grid[i][j].pegaValor() + " ");
             }
             System.out.println();
         }
     }
 
     // OK
-    public boolean checkagemVitoria()
+    public boolean checaVitoria()
     {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                if (grid[i][j].getValor() == 0){
+                if (grid[i][j].pegaValor() == 0){
                     return false;
                 }
             }
@@ -171,22 +171,22 @@ public class Tabuleiro {
     {
         for (int linha = 0; linha < 9; linha++) {
             for (int coluna = 0; coluna < 9; coluna++) {
-                if (grid[linha][coluna].getValor() == 0) {
-                    for (int valor : grid[linha][coluna].getPossibleValues()) {
+                if (grid[linha][coluna].pegaValor() == 0) {
+                    for (int valor : grid[linha][coluna].pegaValoresPossiveis()) {
                         if (podeColocarValor(linha, coluna, valor)) {
-                            grid[linha][coluna].setValor(valor);
+                            grid[linha][coluna].defineValor(valor);
                             if (ehResolvido()) {
-                                this.zeraPossiveisValores();
+                                this.zeraValoresPossiveis();
                                 return true;
                             }
-                            grid[linha][coluna].setValor(0); // Backtrack
+                            grid[linha][coluna].defineValor(0); // Backtrack
                         }
                     }
                     return false; // Se nenhum valor for possível, não é resolvível
                 }
             }
         }
-        this.zeraPossiveisValores();
+        this.zeraValoresPossiveis();
         return true; // Se não há células vazias, o tabuleiro é resolvido
     }
 
@@ -194,7 +194,7 @@ public class Tabuleiro {
     private boolean verificaLinha(int linha, int valor)
     {
         for (int coluna = 0; coluna < 9; coluna++) {
-            if (grid[linha][coluna].getValor() == valor) {
+            if (grid[linha][coluna].pegaValor() == valor) {
                 return false; // O valor já existe na linha
             }
         }
@@ -205,7 +205,7 @@ public class Tabuleiro {
     private boolean verificaColuna(int coluna, int valor)
     {
         for (int linha = 0; linha < 9; linha++) {
-            if (grid[linha][coluna].getValor() == valor) {
+            if (grid[linha][coluna].pegaValor() == valor) {
                 return false; // O valor já existe na coluna
             }
         }
@@ -220,7 +220,7 @@ public class Tabuleiro {
 
         for (int i = linhaInicial; i < linhaInicial + 3; i++) {
             for (int j = colunaInicial; j < colunaInicial + 3; j++) {
-                if (grid[i][j].getValor() == valor) {
+                if (grid[i][j].pegaValor() == valor) {
                     return false; // O valor já existe no bloco 3x3
                 }
             }
@@ -240,7 +240,7 @@ public class Tabuleiro {
     {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                if (grid[i][j].getPossibleValues() == null)
+                if (grid[i][j].pegaValoresPossiveis() == null)
                 {
                     return false;
                 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Elemento {
     private int pos_x, pos_y, valor;
-    public List<Integer> possibleValues;
+    public List<Integer> valoresPossiveis;
     private boolean mutavel;
 
     // OK
@@ -15,32 +15,32 @@ public class Elemento {
         this.pos_y = pos_y;
         this.valor = valor;
         this.mutavel = true;
-        this.possibleValues = new ArrayList<>();
+        this.valoresPossiveis = new ArrayList<>();
         for (int i = 1; i <= 9; i++) {
-            this.possibleValues.add(i);
+            this.valoresPossiveis.add(i);
         }
     }
 
     // OK
-    public void changeMutavel()
+    public void deixaMutavel()
     {
         this.mutavel = true;
     }
 
     // OK
-    public void deixandoImutavel()
+    public void deixaImutavel()
     {
         this.mutavel = false;
     }
 
     // OK
-    public int getValor()
+    public int pegaValor()
     {
         return valor;
     }
 
     // OK
-    public void setValor(int valor)
+    public void defineValor(int valor)
     {
         if (mutavel) {
             this.valor = valor;
@@ -50,24 +50,24 @@ public class Elemento {
     }
 
     // OK
-    public List<Integer> getPossibleValues()
+    public List<Integer> pegaValoresPossiveis()
     {
-        return new ArrayList<>(possibleValues);
+        return new ArrayList<>(valoresPossiveis);
     }
 
     // OK
-    public void addPossibleValue(int valor)
+    public void adicionaValorPossivel(int valor)
     {
-        if (!possibleValues.contains(valor)) {
-            this.possibleValues.add(valor);
-            Collections.sort(this.possibleValues);
+        if (!valoresPossiveis.contains(valor)) {
+            this.valoresPossiveis.add(valor);
+            Collections.sort(this.valoresPossiveis);
         }
     }
 
     // OK
-    public void removePossibleValue(int valor)
+    public void removeValorPossivel(int valor)
     {
-        this.possibleValues.remove(Integer.valueOf(valor));
+        this.valoresPossiveis.remove(Integer.valueOf(valor));
     }
 
     // OK
@@ -78,7 +78,7 @@ public class Elemento {
                 "pos_x=" + pos_x +
                 ", pos_y=" + pos_y +
                 ", valor=" + valor +
-                ", possibleValues=" + possibleValues +
+                ", valoresPossiveis=" + valoresPossiveis +
                 ", mutavel=" + mutavel +
                 '}';
     }

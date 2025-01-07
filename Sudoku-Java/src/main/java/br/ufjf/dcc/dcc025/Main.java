@@ -47,14 +47,14 @@ public class Main
                                             linha = random.nextInt(9);
                                             coluna = random.nextInt(9);
 
-                                            if (tabuleiro.getValor(linha, coluna) != 0) {
-                                                tabuleiro.getElemento(linha, coluna).changeMutavel();
-                                                tabuleiro.setValorRemove(linha, coluna, tabuleiro.getValor(linha, coluna));
+                                            if (tabuleiro.pegaValor(linha, coluna) != 0) {
+                                                tabuleiro.pegaElemento(linha, coluna).deixaMutavel();
+                                                tabuleiro.defineValorRemove(linha, coluna, tabuleiro.pegaValor(linha, coluna));
                                                 i++;
                                             }
                                         }
                                         System.out.println("Tabuleiro gerado automaticamente:");
-                                        tabuleiro.imprimirTabuleiro();
+                                        tabuleiro.imprimeTabuleiro();
                                         key1 = false;
                                     } else {
                                         System.out.println("Tabuleiro inválido gerado, tentando novamente...");
@@ -89,9 +89,9 @@ public class Main
                                         int coluna = Integer.parseInt(valores[1]);
                                         int valor = Integer.parseInt(valores[2]);
                                         if (linha >= 0 && linha < 9 && coluna >= 0 && coluna < 9 && valor > 0 && valor <= 9) {
-                                           boolean veracidade = tabuleiro.setValor(linha, coluna, valor);
+                                           boolean veracidade = tabuleiro.defineValor(linha, coluna, valor);
                                            if(veracidade)
-                                               tabuleiro.setValorImutavel(linha, coluna, valor);
+                                               tabuleiro.defineValorImutavel(linha, coluna, valor);
                                         } else {
                                             System.out.println("Valores fora dos limites permitidos. Insira valores de 1 a 9 para linha, coluna e valor.");
                                         }
@@ -103,7 +103,7 @@ public class Main
                             }
                         }
                         System.out.println("Tabuleiro manual :");
-                        tabuleiro.imprimirTabuleiro();
+                        tabuleiro.imprimeTabuleiro();
                         key = false;
                         break;
                     default:
@@ -128,8 +128,8 @@ public class Main
                                         int coluna = Integer.parseInt(valores[1]);
                                         int valor = Integer.parseInt(valores[2]);
                                         if (linha >= 0 && linha < 9 && coluna >= 0 && coluna < 9 && valor > 0 && valor <= 9) {
-                                            tabuleiro.setValor(linha, coluna, valor);
-                                            vitoria = tabuleiro.checkagemVitoria();
+                                            tabuleiro.defineValor(linha, coluna, valor);
+                                            vitoria = tabuleiro.checaVitoria();
                                         }
                                         else {
                                             System.out.println("Valores fora dos limites permitidos. Insira valores de 1 a 9 para linha, coluna e valor.");
@@ -139,7 +139,7 @@ public class Main
                                 else {
                                     System.out.println("Formato inválido. Tente novamente.");
                              }
-                                tabuleiro.imprimirTabuleiro();
+                                tabuleiro.imprimeTabuleiro();
                                 break;
                             case "2":
                                 String jogadaRemove = scanner.next();
@@ -151,7 +151,7 @@ public class Main
                                         int linha = Integer.parseInt(valores[0]);
                                         int coluna = Integer.parseInt(valores[1]);
                                         if (linha >= 0 && linha < 9 && coluna >= 0 && coluna < 9 ) {
-                                            tabuleiro.setValorRemove(linha, coluna, 0);
+                                            tabuleiro.defineValorRemove(linha, coluna, 0);
                                         } else {
                                             System.out.println("Valores fora dos limites permitidos. Insira valores de 1 a 9 para linha, coluna.");
                                         }
@@ -160,7 +160,7 @@ public class Main
                                 else {
                                     System.out.println("Formato inválido. Tente novamente.");
                                 }
-                                tabuleiro.imprimirTabuleiro();
+                                tabuleiro.imprimeTabuleiro();
                                 break;
                             case "3":
                                 String jogadaDica = scanner.next();
@@ -172,8 +172,8 @@ public class Main
                                         int linha = Integer.parseInt(valores[0]);
                                         int coluna = Integer.parseInt(valores[1]);
                                         if (linha >= 0 && linha < 9 && coluna >= 0 && coluna < 9 ) {
-                                            Elemento elemento = tabuleiro.getElemento(linha, coluna);
-                                            System.out.println("Valores possíveis: " + elemento.getPossibleValues());
+                                            Elemento elemento = tabuleiro.pegaElemento(linha, coluna);
+                                            System.out.println("Valores possíveis: " + elemento.pegaValoresPossiveis());
                                         }
                                         else {
                                             System.out.println("Valores fora dos limites permitidos. Insira valores de 1 a 9 para linha, coluna.");
