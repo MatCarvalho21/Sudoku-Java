@@ -21,6 +21,14 @@ public class Elemento {
         }
     }
 
+    // Método para atualizar a lista de valores possíveis
+    public void atualizaValoresPossiveis(List<Integer> novosValores) {
+        if (mutavel) { // Apenas atualiza se a célula não for imutável
+            this.valoresPossiveis.clear(); // Remove valores antigos
+            this.valoresPossiveis.addAll(novosValores); // Adiciona os novos valores
+        }
+    }
+
     // OK
     public void deixaMutavel()
     {

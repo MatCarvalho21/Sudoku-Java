@@ -1,6 +1,7 @@
 package br.ufjf.dcc.dcc025;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Tabuleiro {
     private Elemento[][] grid;
@@ -66,7 +67,7 @@ public class Tabuleiro {
     }
 
     // OK - USADO AQUI
-    private void zeraValoresPossiveis()
+    public void zeraValoresPossiveis()
     {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -88,9 +89,58 @@ public class Tabuleiro {
             System.out.println("Não há valores nessa posição");
     }
 
+    // OK
+    public void setandoValoresPossiveis() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (grid[i][j].pegaValor() == 0) {
+                    // Lista de valores possíveis: 1 a 9
+                    List<Integer> valoresPossiveis = new ArrayList<>();
+                    for (int valor = 1; valor <= 9; valor++) {
+                        if (podeInserirValor(i, j, valor)) {
+                            valoresPossiveis.add(valor);
+                        }
+                    }
+                    grid[i][j].atualizaValoresPossiveis(valoresPossiveis);
+                }
+            }
+        }
+    }
+
     // OK - USADO AQUI
-    private void atualizaValoresPossiveisRemocao(int linha, int coluna, int valorRemovido)
-    {
+    private boolean podeInserirValor(int linha, int coluna, int valor) {
+        // Verifica a linha
+        for (int j = 0; j < 9; j++) {
+            if (grid[linha][j].pegaValor() == valor) {
+                return false;
+            }
+        }
+
+        // Verifica a coluna
+        for (int i = 0; i < 9; i++) {
+            if (grid[i][coluna].pegaValor() == valor) {
+                return false;
+            }
+        }
+
+        // Verifica o quadrante 3x3
+        int quadInicioLinha = (linha / 3) * 3;
+        int quadInicioColuna = (coluna / 3) * 3;
+        for (int i = quadInicioLinha; i < quadInicioLinha + 3; i++) {
+            for (int j = quadInicioColuna; j < quadInicioColuna + 3; j++) {
+                if (grid[i][j].pegaValor() == valor) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+
+    // OK - USADO AQUI
+    private void atualizaValoresPossiveisRemocao(int linha, int coluna, int valorRemovido) {
+        // Atualizar valores possíveis na linha
         for (int i = 0; i < 9; i++) {
             if (grid[linha][i].pegaValor() == 0) {
                 if (!grid[linha][i].pegaValoresPossiveis().contains(valorRemovido)) {
@@ -99,27 +149,47 @@ public class Tabuleiro {
             }
         }
 
+        // Atualizar valores possíveis na coluna
         for (int i = 0; i < 9; i++) {
             if (i != linha && grid[i][coluna].pegaValor() == 0) {
-                if (!grid[i][coluna].pegaValoresPossiveis().contains(valorRemovido)) {
+                // Verifica se o valor já está presente na linha da célula
+                boolean valorPresenteNaLinha = false;
+                for (int j = 0; j < 9; j++) {
+                    if (grid[i][j].pegaValor() == valorRemovido) {
+                        valorPresenteNaLinha = true;
+                        break;
+                    }
+                }
+                // Adiciona o valor apenas se ele não estiver presente na linha
+                if (!valorPresenteNaLinha && !grid[i][coluna].pegaValoresPossiveis().contains(valorRemovido)) {
                     grid[i][coluna].adicionaValorPossivel(valorRemovido);
                 }
             }
         }
 
-
+        // Atualizar valores possíveis no quadrante 3x3
         int quadInicioLinha = (linha / 3) * 3;
         int quadInicioColuna = (coluna / 3) * 3;
         for (int i = quadInicioLinha; i < quadInicioLinha + 3; i++) {
             for (int j = quadInicioColuna; j < quadInicioColuna + 3; j++) {
                 if ((i != linha || j != coluna) && grid[i][j].pegaValor() == 0) {
-                    if (!grid[i][j].pegaValoresPossiveis().contains(valorRemovido)) {
+                    // Verifica se o valor já está presente na linha da célula
+                    boolean valorPresenteNaLinha = false;
+                    for (int k = 0; k < 9; k++) {
+                        if (grid[i][k].pegaValor() == valorRemovido) {
+                            valorPresenteNaLinha = true;
+                            break;
+                        }
+                    }
+                    // Adiciona o valor apenas se ele não estiver presente na linha
+                    if (!valorPresenteNaLinha && !grid[i][j].pegaValoresPossiveis().contains(valorRemovido)) {
                         grid[i][j].adicionaValorPossivel(valorRemovido);
                     }
                 }
             }
         }
     }
+
 
     // OK
     public void defineValorImutavel(int linha, int coluna, int valor)

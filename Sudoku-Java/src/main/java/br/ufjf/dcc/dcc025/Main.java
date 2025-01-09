@@ -40,6 +40,8 @@ public class Main
                                     // Verifica a validade e resolvibilidade do tabuleiro parcial
                                     chave = !tabuleiro.verificaValidade() || !tabuleiro.ehResolvido();
 
+                                    tabuleiro.zeraValoresPossiveis();
+
                                     if (!chave) {
                                         int i = 0;
                                         while (i < 81 - iEntrada_1)
@@ -53,6 +55,8 @@ public class Main
                                                 i++;
                                             }
                                         }
+
+                                        tabuleiro.setandoValoresPossiveis();
 
                                         for (int j = 0; j < 9; j++){
                                             for (int k = 0; k < 9; k++){
