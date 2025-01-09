@@ -120,7 +120,7 @@ public class Main
                         key = false;
                         break;
                     default:
-                        System.out.println("Entrada inválida, tente novamente!");                                       //mensagem de erro generica para opcao nao existente
+                        System.out.println("Opção inválida, tente novamente!");                                       //mensagem de erro generica para opcao nao existente
                         break;
                 }
             }
@@ -167,7 +167,7 @@ public class Main
                                         if (linha >= 0 && linha < 9 && coluna >= 0 && coluna < 9 && tabuleiro.pegaElemento(linha, coluna).mutavel) {  //verifica se os elementos estao nas posicoes validas e se esse elemento nao e imutavel
                                             tabuleiro.defineValorRemove(linha, coluna, 0);                                                      //remove os elemento do tabuleiro e atribui o valor como 0
                                         } else {
-                                            System.out.println("Valores fora dos limites permitidos. Insira valores de 1 a 9 para linha, coluna.");         //mensagem de erro para entradas de valores invalidos
+                                            System.out.println("Remoção inválida.");         //mensagem de erro para entradas de valores invalidos
                                         }
                                     }
                                 }
