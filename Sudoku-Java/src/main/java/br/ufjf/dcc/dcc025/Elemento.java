@@ -7,7 +7,7 @@ import java.util.List;
 public class Elemento {
     private int pos_x, pos_y, valor;
     public List<Integer> valoresPossiveis;
-    private boolean mutavel;
+    public boolean mutavel;
 
     // OK
     public Elemento(int pos_x, int pos_y, int valor) {

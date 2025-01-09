@@ -53,6 +53,16 @@ public class Main
                                                 i++;
                                             }
                                         }
+
+                                        for (int j = 0; j < 9; j++){
+                                            for (int k = 0; k < 9; k++){
+                                                if (tabuleiro.pegaElemento(j,k).pegaValor() != 0)
+                                                {
+                                                    tabuleiro.pegaElemento(j,k).deixaImutavel();
+                                                }
+                                            }
+                                        }
+
                                         System.out.println("Tabuleiro gerado automaticamente:");
                                         tabuleiro.imprimeTabuleiro();
                                         key1 = false;
@@ -151,7 +161,7 @@ public class Main
                                         String[] valores = item.split(",");
                                         int linha = Integer.parseInt(valores[0]);
                                         int coluna = Integer.parseInt(valores[1]);
-                                        if (linha >= 0 && linha < 9 && coluna >= 0 && coluna < 9 ) {
+                                        if (linha >= 0 && linha < 9 && coluna >= 0 && coluna < 9 && tabuleiro.pegaElemento(linha, coluna).mutavel) {
                                             tabuleiro.defineValorRemove(linha, coluna, 0);
                                         } else {
                                             System.out.println("Valores fora dos limites permitidos. Insira valores de 1 a 9 para linha, coluna.");
