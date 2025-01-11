@@ -2,7 +2,7 @@
 
 Este é um projeto desenvolvido como parte de um estudo acadêmico por:
 
-- **Rômulo Amaral**: Aluno do 4º período de Ciência da Computação na UFJF.
+- **Rômulo Amaral**: Aluno do 3º período de Ciência da Computação na UFJF.
 - **Matheus Carvalho**: Aluno do 5º período de Ciência de Dados e Inteligência Artificial na FGV Rio de Janeiro.
 
 ---
